@@ -106,6 +106,20 @@ const players: Player[] = [
         position: 3,
         points: 0
     },
+    {
+        name: 'caldera',
+        nick: 'Vô Timelar',
+        tagline: '4e20',
+        position: 4,
+        points: 0
+    },
+    {
+        name: 'alevi',
+        nick: 'alevi',
+        tagline: '6405',
+        position: 4,
+        points: 0
+    },
 ]
 
 export interface Player extends Partial<Account> {
@@ -128,7 +142,7 @@ export default async function RankingsPage() {
             ...accountWithRank
         }
 
-    }))
+    })) 
 
     return (
         <main className="h-full w-full flex items-center justify-center">

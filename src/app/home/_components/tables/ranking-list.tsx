@@ -16,7 +16,8 @@ export const RankingList = ({ rankings }: RankingList) => {
             <div className="p-4 bg-transparent text-black rounded-lg">
                 <div className="relative shadow-md sm:rounded-lg">
                     {/* <div className="absolute text-7xl z-50 -top-10 left-1/2 transform -translate-x-1/2 animate-shake">🏆</div> */}
-                    <div className="overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
+                    {/* desktop */}
+                    <div className="hidden lg:block overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
                         <table className="w-full min-w-[70vw] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-lol-main dark:text-gray-400">
                                 <tr>
@@ -42,7 +43,7 @@ export const RankingList = ({ rankings }: RankingList) => {
                                             <tr key={index + 'player'} className="bg-lol-dark backdrop-blur-sm backdrop-opacity-15 bg-opacity-80  border-b dark:border-gray-700 text-xl">
                                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     <span className="flex items-center gap-4 text-white font-bold relative">
-              
+
                                                         <p className="text-4xl tracking-wide after:content-['👑'] after:text-4xl after:rotate-45 after:-top-3 after:right-0 after:absolute">{player.name}</p>
                                                     </span>
                                                 </th>
@@ -104,6 +105,18 @@ export const RankingList = ({ rankings }: RankingList) => {
                                 })}
                             </tbody>
                         </table>
+                    </div>
+
+
+                    {/* mobile */}
+                    <div className="block lg:hidden overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
+                        {rankings.map((player, index) => {
+                            return (
+                                <div key={'player ' + index} className="flex items-center p-4 rounded-lg">
+                                </div>
+                            )
+                        }
+                        )}
                     </div>
                 </div>
             </div>
