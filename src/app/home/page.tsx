@@ -92,13 +92,7 @@ async function getPlayers() {
             url = "http://localhost:3000/api/user";
         }
 
-
-        const fetchOptions = {
-            method: 'GET',
-            cache: 'no-cache'
-
-        }
-        const users = await (await fetch(url, fetchOptions)).json();
+        const users = await (await fetch(url, { method: 'GET', cache: 'no-cache' })).json();
         return users.response
     } catch (error) {
         console.log(error)
