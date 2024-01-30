@@ -3,11 +3,16 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { LoginDialog } from "./modals/LoginDialog";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ViewColumnsIcon } from "@heroicons/react/16/solid";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { SignupDialog } from "./modals/SignupDialog";
 import { signOut, useSession } from "next-auth/react";
+import { Menu, Transition } from "@headlessui/react";
+
+function classNames(...classes: any) {
+    return classes.filter(Boolean).join(' ')
+}
 
 export default function Navbar() {
 
@@ -47,9 +52,89 @@ export default function Navbar() {
 
             </nav>
 
-            <nav className="absolute md:hidden w-10 h-10 rounded-lg bg-gray-800 p-2 right-2 top-2">
-                <Bars3Icon></Bars3Icon>
-            </nav>
+
+            <Menu as="nav" className={"w-full"}>
+                <button onClick={() => router.push('/home')} className="absolute flex items-center justify-center md:hidden w-10 h-10 rounded-lg bg-gray-800 p-2 left-2 top-2">
+                    <div className="relative w-[20px] h-[20px]">
+                        <Image src="/images/iconweb.webp" alt="" className="object-cover" fill></Image>
+                    </div>
+                </button>
+                <div>
+                    <Menu.Button className="absolute md:hidden w-10 h-10 rounded-lg bg-gray-800 p-2 right-2 top-2">
+                        <span className="sr-only">Open user menu</span>
+                        <Bars3Icon></Bars3Icon>
+                    </Menu.Button>
+                </div>
+                <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+                    <Menu.Items className="absolute z-10 mt-2 top-12 right-4 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        {status == 'unauthenticated' && <>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <a
+                                        onClick={() => router.push('/moni')}
+                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                    >
+                                        Moni
+                                    </a>
+                                )}
+                            </Menu.Item>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <a
+                                        onClick={() => setOpenedModal('SIGNUP')}
+                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                    >
+                                        Criar conta
+                                    </a>
+                                )}
+                            </Menu.Item>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <a
+                                        onClick={() => setOpenedModal('LOGIN')}
+                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                    >
+                                        Entrar
+                                    </a>
+                                )}
+                            </Menu.Item>
+
+                        </>}
+                        {
+                            status == 'authenticated' && <>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <a
+                                            onClick={() => router.push('/moni')}
+                                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        >
+                                            Moni
+                                        </a>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <a
+                                            onClick={() => signOutUser()}
+                                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        >
+                                            Sair
+                                        </a>
+                                    )}
+                                </Menu.Item>
+                            </>
+                        }
+                    </Menu.Items>
+                </Transition>
+            </Menu>
 
             <LoginDialog closeModal={() => setOpenedModal(undefined)} isOpen={openedModal === 'LOGIN'} onRecoveryClick={() => { }}></LoginDialog>
             <SignupDialog closeModal={() => setOpenedModal(undefined)} isOpen={openedModal === 'SIGNUP'} onRecoveryClick={() => { }}></SignupDialog>

@@ -28,12 +28,12 @@ export const RankingList = ({ rankings }: RankingList) => {
     }
 
     return (
-        <section>
-            <div className="p-4 bg-transparent text-black rounded-lg">
+        <section className="max-w-screen overflow-auto">
+            <div className="p-1 md:p-4 bg-transparent text-black rounded-lg">
                 <div className="relative shadow-md sm:rounded-lg">
                     {/* <div className="absolute text-7xl z-50 -top-10 left-1/2 transform -translate-x-1/2 animate-shake">🏆</div> */}
                     {/* desktop */}
-                    <div className="hidden lg:block overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
+                    <div className="block overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
                         <table className="w-full min-w-[70vw] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-base text-gray-700 uppercase bg-gray-50 dark:bg-lol-main dark:text-gray-400">
                                 <tr>
@@ -126,7 +126,7 @@ export const RankingList = ({ rankings }: RankingList) => {
 
 
                     {/* mobile */}
-                    <div className="block lg:hidden overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
+                    {/* <div className="block lg:hidden overflow-auto max-h-[60vh] scroll-smooth rounded-lg">
                         {rankings.map((player, index) => {
                             return (
                                 <div key={'player ' + index} className="flex items-center p-4 rounded-lg">
@@ -134,7 +134,7 @@ export const RankingList = ({ rankings }: RankingList) => {
                             )
                         }
                         )}
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

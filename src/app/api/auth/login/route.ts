@@ -11,7 +11,10 @@ export async function POST(req: NextRequest) {
 
   const { nick, password } = await req.json();
 
-  const [userEntity] = await user.find({ nick });
+  const [userEntity] = await user.find(
+    { nick },
+    { password: 1, nick: 1, phone: 1, tagline: 1, xp: 1, name: 1 }
+  );
 
   if (!userEntity) {
     return Response.json(
