@@ -61,6 +61,51 @@ export async function getAccountInformation(
     const { puuid } = await getPUUIDByUser(name, tagline);
     const { id } = await getSummonerIdByPUUID(puuid);
     const account = await getAccountInformationBySummonerId(id);
-    return (account && account?.length > 0) ? account[0] : undefined;
+    return account && account?.length > 0 ? account[0] : undefined;
   } catch (error) {}
+}
+
+export async function incrementUserXp(userId: string): Promise<any> {
+  "use server";
+  let url = `https://super-ligadaslendas.vercel.app/api/user/${userId}`;
+
+  if (process.env.NODE_ENV == "development") {
+    url = `http://localhost:3000/api/user/${userId}`;
+  }
+
+  const response = await (await fetch(url, { method: "POST" })).json();
+
+  return JSON.stringify({
+    status: 200,
+    message: response,
+  });
+}
+
+export async function getPlayers() {
+  "use server";
+  try {
+    let url = "https://super-ligadaslendas.vercel.app/api/user";
+
+    if (process.env.NODE_ENV == "development") {
+      url = "http://localhost:3000/api/user";
+    }
+
+    const users = await (
+      await fetch(url, { method: "GET", cache: "no-cache" })
+    ).json();
+    return users.response;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
+export interface Player extends Partial<Account> {
+  _id: string;
+  name: string;
+  nick: string;
+  tagline: string;
+  position: number;
+  points: number;
+  xp: number;
 }

@@ -1,5 +1,6 @@
-import { Account, getAccountInformation, getPUUIDByUser } from "@/actions/player";
+import { Account, getAccountInformation, getPUUIDByUser, incrementUserXp } from "@/actions/player";
 import { RankingList } from "./_components/tables/ranking-list";
+import { Suspense } from "react";
 
 // const players: Player[] = [
 //     {
@@ -84,52 +85,12 @@ import { RankingList } from "./_components/tables/ranking-list";
 //     },
 // ]
 
-async function getPlayers() {
-    try {
-        let url = "https://super-ligadaslendas.vercel.app/api/user";
-
-        if (process.env.NODE_ENV == "development") {
-            url = "http://localhost:3000/api/user";
-        }
-
-        const users = await (await fetch(url, { method: 'GET', cache: 'no-cache' })).json();
-        return users.response
-    } catch (error) {
-        console.log(error)
-        return []
-    }
-}
-
-export interface Player extends Partial<Account> {
-    _id: string
-    name: string,
-    nick: string,
-    tagline: string,
-    position: number,
-    points: number,
-    xp: number
-}
 
 export default async function RankingsPage() {
 
-    const players: Player[] = await getPlayers()
-
-    const playersWithRank = await Promise.all(players.map(async (player) => {
-
-        const accountWithRank = await getAccountInformation(player.nick, player.tagline);
-
-        return {
-            ...player,
-            ...accountWithRank
-        }
-
-    }))
-
-    const playerOrderedByPosition = playersWithRank.sort((a, b) => a.xp - b.xp);
-
     return (
         <main className="h-full w-full flex items-center justify-center">
-            <RankingList rankings={playerOrderedByPosition}></RankingList>
+            <RankingList></RankingList>
         </main>
     )
 }
