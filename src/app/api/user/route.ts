@@ -44,6 +44,7 @@ export async function POST(req: NextRequest) {
   return Response.json(data);
 }
 
+
 export async function GET(req: NextRequest) {
   await dbConnect();
 
