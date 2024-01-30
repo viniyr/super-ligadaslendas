@@ -84,54 +84,66 @@ import { RankingList } from "./_components/tables/ranking-list";
 //     },
 // ]
 
-const players: Player[] = [
-    {
-        name: 'vini',
-        nick: 'yonezawa',
-        tagline: 'night',
-        position: 1,
-        points: 0
-    },
-    {
-        name: 'guigui',
-        nick: 'Aroldo SuasNegas',
-        tagline: '0000',
-        position: 2,
-        points: 0
-    },
-    {
-        name: 'moni',
-        nick: 'moni',
-        tagline: 'BR2',
-        position: 3,
-        points: 0
-    },
-    {
-        name: 'caldera',
-        nick: 'Vô Timelar',
-        tagline: '4e20',
-        position: 4,
-        points: 0
-    },
-    {
-        name: 'alevi',
-        nick: 'alevi',
-        tagline: '6405',
-        position: 4,
-        points: 0
-    },
-]
+async function getPlayers() {
+    let url = 'http://localhost:3000/api/user'
+    const fetchOptions = {
+        method: 'GET'
+    }
+    const users = await (await fetch(url, fetchOptions)).json();
+    return users.response
+}
+
+// const players: Player[] = [
+//     {
+//         name: 'vini',
+//         nick: 'yonezawa',
+//         tagline: 'night',
+//         position: 1,
+//         points: 0
+//     },
+//     {
+//         name: 'guigui',
+//         nick: 'Aroldo SuasNegas',
+//         tagline: '0000',
+//         position: 2,
+//         points: 0
+//     },
+//     {
+//         name: 'moni',
+//         nick: 'moni',
+//         tagline: 'BR2',
+//         position: 3,
+//         points: 0
+//     },
+//     {
+//         name: 'caldera',
+//         nick: 'Vô Timelar',
+//         tagline: '4e20',
+//         position: 4,
+//         points: 0
+//     },
+//     {
+//         name: 'alevi',
+//         nick: 'alevi',
+//         tagline: '6405',
+//         position: 4,
+//         points: 0
+//     },
+// ]
 
 export interface Player extends Partial<Account> {
+    _id: string
     name: string,
     nick: string,
     tagline: string,
     position: number,
-    points: number
+    points: number,
+    xp: number
 }
 
 export default async function RankingsPage() {
 
+    const players: Player[] = await getPlayers()
 
     const playersWithRank = await Promise.all(players.map(async (player) => {
 
@@ -142,11 +154,13 @@ export default async function RankingsPage() {
             ...accountWithRank
         }
 
-    })) 
+    }))
+
+    const playerOrderedByPosition = playersWithRank.sort((a, b) => a.xp - b.xp);
 
     return (
         <main className="h-full w-full flex items-center justify-center">
-            <RankingList rankings={playersWithRank}></RankingList>
+            <RankingList rankings={playerOrderedByPosition}></RankingList>
         </main>
     )
 }

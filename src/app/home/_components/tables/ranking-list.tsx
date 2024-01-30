@@ -1,5 +1,9 @@
+'use client'
+
 import Image from "next/image";
 import { Player } from "../../page";
+import { useSession } from "next-auth/react";
+import { PlusCircleIcon } from "@heroicons/react/16/solid";
 
 interface RankingList {
     rankings: Player[]
@@ -10,6 +14,18 @@ function capitalizeFirstLetter(string: string) {
 }
 
 export const RankingList = ({ rankings }: RankingList) => {
+
+    const { status } = useSession();
+
+    const incrementUserXp = (userId: string) => {
+
+        if (status !== 'authenticated') return;
+        try {
+            alert('to be implemented')
+        } catch (error) {
+
+        }
+    }
 
     return (
         <section>
@@ -38,13 +54,13 @@ export const RankingList = ({ rankings }: RankingList) => {
                             <tbody>
                                 {rankings.map((player, index) => {
 
-                                    if (player.position === 1) {
+                                    if (index == 0) {
                                         return (
                                             <tr key={index + 'player'} className="bg-lol-dark backdrop-blur-sm backdrop-opacity-15 bg-opacity-80  border-b dark:border-gray-700 text-xl">
                                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     <span className="flex items-center gap-4 text-white font-bold relative">
 
-                                                        <p className="text-4xl tracking-wide after:content-['👑'] after:text-4xl after:rotate-45 after:-top-3 after:right-0 after:absolute">{player.name}</p>
+                                                        <p className="text-4xl tracking-wide after:content-['👑'] after:text-4xl after:rotate-45 after:-top-3 after:right-0 after:absolute">{index + 1}. {player.name}</p>
                                                     </span>
                                                 </th>
                                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -64,8 +80,9 @@ export const RankingList = ({ rankings }: RankingList) => {
                                                 </th>
                                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     <span className="flex items-center gap-4 text-yellow-500 font-bold relative">
-                                                        <div className="w-20 h-20 relative flex items-center justify-end ml-auto mr-0">
-                                                            <p className="drop-shadow-glow">{player.points} pts.</p>
+                                                        <div onClick={() => incrementUserXp(player._id)} className="w-20 h-20 relative flex items-center gap-2 justify-end ml-auto mr-0">
+                                                            {status == 'authenticated' && <PlusCircleIcon className=" w-4 h-4"></PlusCircleIcon>}
+                                                            <p className="drop-shadow-glow">{player.xp} pts.</p>
                                                         </div>
                                                     </span>
                                                 </th>
@@ -76,7 +93,7 @@ export const RankingList = ({ rankings }: RankingList) => {
                                     return (
                                         <tr key={index + 'player'} className="bg-lol-dark backdrop-blur-sm backdrop-opacity-15 bg-opacity-60 border-b dark:border-gray-700 text-lg">
                                             <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {player.position}. {player.name}
+                                                {index + 1}. {player.name}
                                             </th>
                                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-xs">
                                                 {player.nick}#{player.tagline}
@@ -96,7 +113,7 @@ export const RankingList = ({ rankings }: RankingList) => {
                                             <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <span className="flex items-center gap-4 text-blue-600 font-bold relative">
                                                     <div className="w-20 h-20 relative flex items-center justify-end ml-auto mr-0">
-                                                        <p className="drop-shadow-glow">{player.points} pts.</p>
+                                                        <p className="drop-shadow-glow">{player.xp} pts.</p>
                                                     </div>
                                                 </span>
                                             </th>
