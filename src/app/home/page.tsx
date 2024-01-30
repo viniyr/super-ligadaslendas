@@ -97,7 +97,6 @@ async function getPlayers() {
             method: 'GET'
         }
         const users = await (await fetch(url, fetchOptions)).json();
-        console.log(users)
         return users.response
     } catch (error) {
         console.log(error)

@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        grow: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.7)" },
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -29,9 +35,10 @@ module.exports = {
           "0 0px 65px rgba(255, 255,255, 0.3)",
         ],
       },
-    },
-    animation: {
-      shake: "shake 2s ease-in-out infinite",
+      animation: {
+        shake: "shake 2s ease-in-out infinite",
+        grow: "grow 1s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

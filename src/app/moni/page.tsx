@@ -13,13 +13,15 @@ export default function MoniPage() {
                 }
 
 
-                <Image
-                    src={'/images/moni.jpeg'}
-                    width={500}
-                    height={500}
-                    alt="moni"
-                    className="absolute left-1/2 -translate-x-1/2 rounded-lg"
-                ></Image>
+                <div className="absolute left-1/2 -translate-x-1/2">
+                    <Image
+                        src={'/images/moni.jpeg'}
+                        width={500}
+                        height={500}
+                        alt="moni"
+                        className="rounded-lg animate-grow"
+                    ></Image>
+                </div>
             </div>
         </main>
     )
