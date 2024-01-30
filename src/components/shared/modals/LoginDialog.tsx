@@ -70,6 +70,7 @@ export function LoginDialog({
             ...loginForm,
         });
 
+        
         if (!res?.ok) {
             setLoading(false);
             setErrorMessage("E-mail ou senha inválidos");
