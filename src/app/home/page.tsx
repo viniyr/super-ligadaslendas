@@ -85,7 +85,12 @@ import { RankingList } from "./_components/tables/ranking-list";
 // ]
 
 async function getPlayers() {
-    let url = 'http://localhost:3000/api/user'
+    let url = "https://super-ligadaslendas.vercel.app/api/auth/login";
+
+    if (process.env.NODE_ENV == "development") {
+        url = "http://localhost:3000/api/auth/login";
+    }
+
     const fetchOptions = {
         method: 'GET'
     }
