@@ -94,7 +94,9 @@ async function getPlayers() {
 
 
         const fetchOptions = {
-            method: 'GET'
+            method: 'GET',
+            cache: 'no-cache'
+
         }
         const users = await (await fetch(url, fetchOptions)).json();
         return users.response
