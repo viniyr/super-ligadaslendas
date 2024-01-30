@@ -52,7 +52,7 @@ export const RankingList = ({ rankings }: RankingList) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rankings.map((player, index) => {
+                                {rankings.length > 0 && rankings.map((player, index) => {
 
                                     if (index == 0) {
                                         return (
@@ -122,6 +122,9 @@ export const RankingList = ({ rankings }: RankingList) => {
                                 })}
                             </tbody>
                         </table>
+                        {rankings.length == 0 && <div className="bg-lol-dark backdrop-blur-sm backdrop-opacity-15 bg-opacity-80 text-2xl text-center text-white">
+                            <h1 className="py-10">Nenhuma lenda encontrada.</h1>
+                        </div>}
                     </div>
 
 
